@@ -28,7 +28,7 @@ app.post('/api/event', (req, res) => {
       break;
     case 'im.message.receive_v1':
       // 生成接收到新的群聊消息的通知
-      console.log(req.body.event.message.content.text);
+      console.log(req.body.event.message.content);
       message = `收到一条新的群聊消息:${req.body.event.message.content}`;
       break;
     default:
@@ -37,7 +37,7 @@ app.post('/api/event', (req, res) => {
   }
   console.log(message);
   // 在Discord中发布通知
-  axios.post(process.env.DISCORD_WEBHOOK_URL, {"content":JSON.stringify(message)})
+  axios.post(process.env.DISCORD_WEBHOOK_URL, {"content":message})
     .then(() => console.log('Discord通知已发送！'))
     .catch(err => console.error(err));
   return res.status(200).send('OK');
