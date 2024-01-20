@@ -1,5 +1,10 @@
 module.exports = async (req, res) => {
-    const { challenge } = req.body;
-    // 回复飞书发出的 challenge 值
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+  req.on('end', () => {
+    const { challenge } = JSON.parse(body);
     res.status(200).send(challenge);
+  });
 };
