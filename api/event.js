@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const axios = require('axios');
 app.use(bodyParser.json());
-//  app.post('/api/event', (req, res) => {
+app.post('/api/event', (req, res) => {
 //  if (req.body.hasOwnProperty('challenge')) {
 //    res.status(200).send({ challenge: req.body.challenge });
 //  } else {
