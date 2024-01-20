@@ -11,6 +11,7 @@ app.post('/api/event', (req, res) => {
 //  }
   console.log(req);
   const eventType = req.body.header.event_type;
+  console.log(eventType);
   let message = '';
   switch (eventType) {
     case 'im.chat.member.bot.added_v1':
@@ -27,12 +28,14 @@ app.post('/api/event', (req, res) => {
       break;
     case 'im.message.receive_v1':
       // 生成接收到新的群聊消息的通知
+      console.log(req.body.event.message);
       message = `接收到新的群聊消息：${req.body.event.message.content}`;
       break;
     default:
       console.log(`收到未支持的事件类型：${eventType}`);
       return res.status(200).send('OK');
   }
+  console.log(message);
   // 在Discord中发布通知
   axios.post(process.env.DISCORD_WEBHOOK_URL, {content: message})
     .then(() => console.log('Discord通知已发送！'))
