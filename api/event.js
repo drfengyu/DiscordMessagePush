@@ -29,7 +29,7 @@ app.post('/api/event', (req, res) => {
     case 'im.message.receive_v1':
       // 生成接收到新的群聊消息的通知
       console.log(req.body.event.message.content);
-      message = `${req.body.event.message.content}`;
+      message = `${req.body.event.message.content.text}`;
       break;
     default:
       console.log(`收到未支持的事件类型：${eventType}`);
