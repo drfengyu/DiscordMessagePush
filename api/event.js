@@ -10,7 +10,7 @@ app.post('/api/event', (req, res) => {
 //    res.status(400).send('No challenge found in request');
 //  }
   console.log(req);
-  const eventType = req.header.event_type;
+  const eventType = req.body.header.event_type;
   let message = '';
   switch (eventType) {
     case 'im.chat.member.bot.added_v1':
