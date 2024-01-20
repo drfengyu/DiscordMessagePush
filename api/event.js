@@ -9,7 +9,7 @@ app.post('/api/event', (req, res) => {
 //  } else {
 //    res.status(400).send('No challenge found in request');
 //  }
-  const eventType = req.body.type;
+  const eventType = req.header.event_type;
   let message = '';
   switch (eventType) {
     case 'im.chat.member.bot.added_v1':
@@ -26,7 +26,7 @@ app.post('/api/event', (req, res) => {
       break;
     case 'im.message.receive_v1':
       // 生成接收到新的群聊消息的通知
-      message = `接收到新的群聊消息：${req.body.text.content}`;
+      message = `接收到新的群聊消息：${req.event.message.content}`;
       break;
     default:
       console.log(`收到未支持的事件类型：${eventType}`);
