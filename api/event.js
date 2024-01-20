@@ -28,7 +28,7 @@ app.post('/api/event', (req, res) => {
       break;
     case 'im.message.receive_v1':
       // 生成接收到新的群聊消息的通知
-      console.log(req.body.event.message.content);
+      console.log(req.body.event.message.content.text);
       message = `${req.body.event.message.content.text}`;
       break;
     default:
