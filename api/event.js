@@ -38,8 +38,11 @@ app.post('/api/event', (req, res) => {
   console.log(message);
   // 在Discord中发布通知
   axios.post(process.env.DISCORD_WEBHOOK_URL, {"content":message})
-    .then(() => console.log('Discord通知已发送！'))
-    .catch(err => console.error(err));
+    .then(function (response) {
+    // Handle success
+    console.log("Response Status:", response.status);
+    console.log("Response Data:", response.data);
+}).catch(err => console.error(err));
   return res.status(200).send('OK');
 });
 module.exports = app;
