@@ -36,7 +36,8 @@ app.post('/api/event', (req, res) => {
   }
   console.log(message);
   // 在Discord中发布通知
-  axios.post(process.env.DISCORD_WEBHOOK_URL,{"content":message},{timeout:5000})
+ const sendmessage=async()＝＞{
+  await axios.post(process.env.DISCORD_WEBHOOK_URL,{"content":message},{timeout:5000})
     .then(function (response) {
     // Handle success
     console.log("Response Status:", response.status);
@@ -44,4 +45,6 @@ app.post('/api/event', (req, res) => {
 }).catch(err => console.error(err));
   return res.status(200).send('OK');
 });
+}
+sendmessage();      
 module.exports = app;
