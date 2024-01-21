@@ -9,7 +9,6 @@ app.post('/api/event', (req, res) => {
  //} else {
 //  res.status(400).send('No challenge found in request');
 //}
-  console.log(res);
   const eventType = req.body.header.event_type;
   console.log(eventType);
   let message = '';
