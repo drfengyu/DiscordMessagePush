@@ -5,7 +5,7 @@ const axios = require('axios');
 const https=require('https');
 var webhookId = process.env.WEBHOOK_ID;
 // 给飞书群发送消息
-function sendMsgToFeishu(id = webhookId, content) {
+function sendWelcome(id = webhookId, content) {
     var options = {
         hostname: 'open.feishu.cn',
         port: 443,
@@ -33,6 +33,7 @@ app.post('/api/event', (req, res) => {
  //} else {
 //  res.status(400).send('No challenge found in request');
 //}
+  console.log(req);
   const eventType = req.body.header.event_type;
   console.log(eventType);
   let message = '';
@@ -44,7 +45,7 @@ app.post('/api/event', (req, res) => {
     case 'im.chat.member.user.added_v1':
       // 生成用户被添加到群聊的通知
       message = `${req.body.user.name} 被添加到一个群聊中。`;
-    
+      sendWelcome("[派对]热烈欢迎新朋友加入我们的大家庭！期待在这里你能获得你所需的帮助，同时也能向大家学习、分享你的知识和经验。在这个群里，每个人都是贡献者也是学习者。再次欢迎你的加入，希望我们能共同进步，一起成长！");
       break;
     case 'im.message.message_read_v1':
       // 生成消息已读的通知
