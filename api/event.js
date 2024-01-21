@@ -2,6 +2,30 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const https=require('https');
+var webhookId = process.env.WEBHOOK_ID;
+// 给飞书群发送消息
+function sendMsgToFeishu(id = webhookId, content) {
+    var options = {
+        hostname: 'open.feishu.cn',
+        port: 443,
+        path: `/open-apis/bot/v2/hook/${id}`,
+        method: 'POST',
+        headers: {
+              'Content-Type': 'application/json'
+           }
+      };
+      var req = https.request(options, (res) => {      
+        res.on('data', (d) => {
+          process.stdout.write(d);
+        });
+      });
+      req.on('error', (e) => {
+        console.error(e);
+      });
+      req.write(content);
+      req.end();
+}
 app.use(bodyParser.json());
 app.post('/api/event', (req, res) => {
 // if (req.body.hasOwnProperty('challenge')) {
@@ -20,6 +44,7 @@ app.post('/api/event', (req, res) => {
     case 'im.chat.member.user.added_v1':
       // 生成用户被添加到群聊的通知
       message = `${req.body.user.name} 被添加到一个群聊中。`;
+    
       break;
     case 'im.message.message_read_v1':
       // 生成消息已读的通知
